@@ -1,0 +1,152 @@
+
+<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Line Chart</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+	<style>
+	canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body>
+	<div style="width:100%;">
+		<canvas id="canvas"></canvas>
+	</div>
+	<br>
+	<br>
+  <script> //차트 가로축
+		var MONTHS = ['2019년 7월', '8월', '9월', '10월', '11월', '12월', '2020년 1월'];
+		var config = {
+			type: 'line', //차트 유형
+			data: {
+				labels: ['2019년 7월', '8월', '9월', '10월', '11월', '12월', '2020년 1월'],
+				datasets: [
+//차트 데이터
+          <!-- 아이유 -->
+          {
+					label: '아이유',
+					backgroundColor: window.chartColors.red,
+					borderColor: window.chartColors.red,
+					data: [
+						Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000
+					],
+					fill: false,
+				},
+          <!-- -->
+
+          <!-- 태연 -->
+        {
+					label: '태연',
+					fill: false,
+					backgroundColor: window.chartColors.green,
+					borderColor: window.chartColors.green,
+					data: [
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000
+					],
+				},
+        <!-- -->
+
+        <!-- 방탄소년단 -->
+        {
+					label: '방탄소년단',
+					fill: false,
+					backgroundColor: window.chartColors.yellow,
+					borderColor: window.chartColors.yellow,
+					data: [
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000
+					],
+				},
+        <!-- -->
+
+        <!-- EXO -->
+        {
+					label: 'EXO',
+					fill: false,
+					backgroundColor: window.chartColors.blue,
+					borderColor: window.chartColors.blue,
+					data: [
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000,
+            Math.random()*10000
+					],
+				}
+        <!-- -->
+      ]
+
+			},
+			options: {
+				responsive: true,
+				title: {
+					display: true,
+					text: '아이돌 예측 차트 Top 10'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{ // x축
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{ // y축
+						display: true,
+						ticks: {
+              min: 0,
+              max: 10000,
+              stepSize: 2000,
+              callback:function(value, index, values){
+                return value + 'k';
+              }
+              }
+					}]
+				}
+			}
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myLine = new Chart(ctx, config);
+		};
+	</script>
+</body>
+
+</html>
