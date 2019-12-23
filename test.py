@@ -27,4 +27,4 @@ for item in items:
 # df = pd.DataFrame(items)
 # print(df)
 
-# driver.close()
+driver.close()
