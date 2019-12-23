@@ -1,0 +1,3 @@
+django-admin startproject website ./djangoIdol
+
+django 사이트 관리자 : admin / qwer1234

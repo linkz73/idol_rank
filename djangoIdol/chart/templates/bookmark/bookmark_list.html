@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Django Bookmark List{% endblock %}
+{% block content %}
+    <div id="content">
+        <h1>Boookmark List</h1>
+        <ul>
+            {% for bookmark in object_list %}
+                <li><a href="{% url 'bookmark:detail' bookmark.id %}">{{ bookmark }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}
+
+{% block footer %}
+    <div id="footer">&copy; Django for Python 2019.</div>
+{% endblock %}
