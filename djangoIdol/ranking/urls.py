@@ -6,7 +6,7 @@ app_name = 'ranking'
 
 urlpatterns = [
     # .../ranking/
-    path('', PostLV.as_view(), name='index'),
+    path('', RankingLV.as_view(), name='index'),
     # .../blog/post/
     # path('chart/', PostLV.as_view(), name='post_list'),
     # .../blog/post/slug

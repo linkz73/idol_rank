@@ -8,7 +8,7 @@ from django.utils.text import slugify
 
 
 @python_2_unicode_compatible
-class Post(models.Model):
+class Ranking(models.Model):
     title = models.CharField('TITLE', max_length=50)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='제목을 위한 별칭으로 한개의 단어로 사용')
     description = models.CharField('DESCRIPTION', max_length=100, blank=True)
@@ -18,16 +18,16 @@ class Post(models.Model):
     owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE,)
 
     class Meta:
-        verbose_name = 'post'  # 이 이름을 이용해서 표시 가능
-        verbose_name_plural = 'posts'
-        db_table = 'my_post'
+        verbose_name = 'ranking'  # 이 이름을 이용해서 표시 가능
+        verbose_name_plural = 'rankings'
+        db_table = 'ranking'
         ordering = ('-modify_date',)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail', args=(self.slug,))
+        return reverse('ranking:post_detail', args=(self.slug,))
         # return reverse('blog:post_detail', kwargs={'slug': self.slug})
 
     def get_previous_post(self):
@@ -39,4 +39,4 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.title, allow_unicode=True)
-        super(Post, self).save(*args, **kwargs)
+        super(Ranking, self).save(*args, **kwargs)

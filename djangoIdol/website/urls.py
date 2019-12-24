@@ -21,12 +21,12 @@ from .views import HomeView  # 홈 뷰
 from .views import UserCreateView, UserCreateDoneTV
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name='admin'),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register/', UserCreateView.as_view(), name='register'),
-    path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
+    # path('admin/', admin.site.urls, name='admin'),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    # path('accounts/register/', UserCreateView.as_view(), name='register'),
+    # path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
 
     path('', HomeView.as_view(), name='home'),  # 홈 뷰 추가
-    # path('chart/', include('chart.urls',), name='chart'),
+    path('chart/', include('chart.urls',), name='chart'),
     path('ranking/', include('ranking.urls',), name='ranking'),
 ]
