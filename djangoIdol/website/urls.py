@@ -27,6 +27,6 @@ urlpatterns = [
     path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
 
     path('', HomeView.as_view(), name='home'),  # 홈 뷰 추가
-    path('chart/', include('chart.urls',), name='chart'),
+    # path('chart/', include('chart.urls',), name='chart'),
     path('ranking/', include('ranking.urls',), name='ranking'),
 ]

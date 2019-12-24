@@ -6,9 +6,9 @@ app_name = 'chart'
 
 urlpatterns = [
     # .../blog/
-    path('', PostLV.as_view(), name='index'),
+    # path('', PostLV.as_view(), name='index'),
     # .../blog/post/
-    path('chart/', PostLV.as_view(), name='post_list'),
+    # path('chart/', PostLV.as_view(), name='post_list'),
     # .../blog/post/slug
     # path('post/<str:slug>/', PostDV.as_view(), name='post_detail'),
     
