@@ -1,0 +1,15 @@
+django-admin startproject website ./djangoIdol
+
+django 사이트 관리자 : admin / qwer1234
+
+<< 작업순서 >>
+1. settings.py
+2. models.py
+3. urls.py
+4. views.py
+5. templates
+
+<< 설정 변경 후 실행 >>
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
