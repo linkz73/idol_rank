@@ -25,11 +25,13 @@ time.sleep(3)
 # items = driver.find_elements_by_class_name("section")
 items = driver.find_elements_by_tag_name("td")
 total=[]
+
 for item in items:
-    split_item = item.text.split('?')
+    split_item = []
+    split_item.append(item.text)
     result = list(map(lambda x: x.replace(',',"").replace(' ',''),split_item))
     total.append(result)
-    print(result)
+    # print(result)
     # total.append(result)
     # sub = []
     # for i in split_item:
@@ -42,12 +44,12 @@ total = sum(total,[])
 n = 9
 result = [total[i * n:(i + 1) * n] for i in range((len(total) + n - 1) // n )]
 # print(result)
-
+for i in range(len(result)):
+    result[i].append("201801")
 driver.close()
 
-df = pd.DataFrame(result, columns=['순위','아이돌','음원/음반','유튜브','전문가/평점랭킹','방송/포털/소셜','총점','순위변화','아이돌 평점주기'])
+df = pd.DataFrame(result, columns=['순위','아이돌','음원/음반','유튜브','전문가/평점랭킹','방송/포털/소셜','총점','순위변화','아이돌 평점주기','날짜'])
 df.drop(['순위변화','아이돌 평점주기'], axis='columns', inplace=True)
-df["날짜"] = "201801"
 display(df)
 '''
 for item in items:
