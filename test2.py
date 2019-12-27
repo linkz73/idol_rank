@@ -10,6 +10,8 @@ import numpy as np
 
 webdriver = "chromedriver.exe"
 
+
+
 driver = Chrome(webdriver)
 total_y =[]
 for month in range(1,3):
