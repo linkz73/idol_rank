@@ -2,9 +2,11 @@ import time
 from selenium.webdriver import Chrome
 import pandas as pd
 from IPython.display import display
-
-
+from sqlalchemy import create_engine
+import pymysql
 webdriver = "chromedriver.exe"
+
+
 
 driver = Chrome(webdriver)
 df = pd.DataFrame(columns=['순위', '아이돌', '음원/음반', '유튜브', '전문가/평점랭킹', '방송/포털/소셜', '총점', '순위변화', '아이돌 평점주기', '날짜'])
@@ -53,3 +55,7 @@ df.drop(['유튜브', '전문가/평점랭킹', '순위변화', '아이돌 평�
 display(df)
 
 df.to_excel('test_final.xlsx', sheet_name = 'sheet1')
+engine = create_engine("mysql+pymysql://root:"+"1234"+"@127.0.0.1:3306/idol_rank?charset=utf8", encoding='utf-8')
+conn = engine.connect()
+df.to_sql(name='idol_chart', con=engine, if_exists='append', index = False)
+conn.close()
