@@ -87,7 +87,8 @@ DATABASES = {
         'NAME': os.environ.get('DJANGO_DB_NAME', 'django_app'),
         'USER': os.environ.get('DJANGO_DB_USERNAME', 'django_app'),
         'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', 'django_app123'),
-        'HOST': os.environ.get('DJANGO_DB_HOST', 'db'),
+        # 'HOST': os.environ.get('DJANGO_DB_HOST', 'db'),
+        'HOST': os.environ.get('DJANGO_DB_HOST', 'localhost'),
         'PORT': os.environ.get('DJANGO_DB_PORT', '3306'),
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"'

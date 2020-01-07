@@ -45,41 +45,31 @@ C:\Study\project_idol\venv\Scripts\deactivate.bat
 # pip 업그레이드
 python -m pip install --upgrade pip
 
-# pip 으로 의존성 패키지 리스트 목록화 하기
-pip freeze > requirements.txt
-
 # pip 으로 의존성 패키지 한번에 설치하기
 pip install -r requirements.txt
+
+# (참고) pip 으로 의존성 패키지 리스트 목록화 하기
+pip freeze > requirements.txt
 
 #**** 프로젝트 파일의 실행경로가 달라지는 경우 venv/Scripts/acvate.bat 파일 수정
 # 11라인에서 수정 --> set "VIRTUAL_ENV=C:\Study\project_idol\venv"
 ```
-----
+3. 로컬에서 개발을 진행하는 경우 docker, docker-compose 를 이용해 이미지를 운영하지 않아도 됨.
+mysql 서비스 실행 중인 것을 확인한 후 django_app 폴더의 settings.py 90 라인에서 아래 host를 db 에서 localhost 로 변경.
 
-## django 프로젝트 생성 및 관리
-1. django 프로젝트 초기화
-```
-# django 프로젝트 초기화
-// django-admin startproject django_app ./djangoIdol
-django-admin startproject django_app .
+> 'HOST': os.environ.get('DJANGO_DB_HOST', 'db'), 
 
-# django 사이트 관리자 생성
-python manage.py createsuperuser
-```
-2. 작업순서
-- settings.py
-- models.py
-- urls.py
-- views.py
-- templates
+에디터인 vscode 나 pycharm 의 터미널에서 (venv) 가상환경을 확인하고 아래 명령을 순서대로 실행하면 개발을 바로 진행할 수 있음.
 
-3. 설정 변경 후 실행
 ```
-python manage.py makemigrations
 python manage.py migrate
+python manage.py createsuperuser
+python manage.py makemigrations
 python manage.py runserver
 ```
+
 ----
+
 
 ## Docker 및 Docker-compose 관리
 1. docker desktop for windows 2.1.7.0 버전 이상 설치
@@ -88,6 +78,9 @@ python manage.py runserver
 2. cmd 를 관리자 권한으로 실행
 
 3. docker-compose 가 있는 프로젝트 폴더로 이동
+
+4. docker-compose 를 실행하는 경우 본 프로젝트의 docker-compose.yml 에는 mysql 설치도 같이 포함돼 있음.
+3306 포트를 사용하므로 현재 mysql 서비스가 3306 포트로 실행되고 있다면 서비스 중지한 후 docker-compose 를 진행해야 한다.
 
 4. 아래 명령어 실행
 ```
@@ -114,7 +107,7 @@ docker-compose down
 docker-compose down --volume   # 볼륨까지 삭제
 
 5) 실행중 컨테이너에서 명령어 실행. 자동화된 마이그레이션용 파일 생성이나 유닛 테스트, lint 등을 실행할 때 사용
-docker-compose exec app python ./manage.py makemigrations
+docker-compose exec app python manage.py makemigrations
 
 6) 서비스 로그 확인. logs 뒤에 서비스 이름을 적지 않으면 도커 컴포즈가 관리하는 모든 서비스의 로그 보여줌.
 docker-compose logs django
@@ -125,7 +118,7 @@ docker-compose logs django
 docker-compose exec app python ./manage.py createsuperuser
 ```
 
-#### 자세한 내용은 아래 링크 참고
+#### docker-compose 관련 자세한 내용은 아래 링크 참고
 <https://www.44bits.io/ko/post/almost-perfect-development-environment-with-docker-and-docker-compose>
 
 #### docker 관련 명령어
@@ -136,3 +129,30 @@ docker-compose exec app python ./manage.py createsuperuser
 - 이미지 삭제 : docker rmi 이미지ID
 - 이미지 강제 삭제  : docker rmi -f 이미지ID
 - docker-compose exec app python manage.py migrate
+
+---
+
+## django 프로젝트 생성 및 관리
+1. django 프로젝트 초기화
+```
+# django 프로젝트 초기화
+// django-admin startproject django_app ./djangoIdol
+django-admin startproject django_app .
+
+# django 사이트 관리자 생성
+python manage.py createsuperuser
+```
+2. 작업순서
+- settings.py
+- models.py
+- urls.py
+- views.py
+- templates
+
+3. 설정 변경 후 실행
+```
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+----
