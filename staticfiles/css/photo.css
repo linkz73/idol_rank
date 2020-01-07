@@ -1,0 +1,64 @@
+div.album-list {
+    margin:20px 50px;
+}
+
+div.album-list-photo {
+    float:left;
+    width: 150px;
+    height: 180px;
+}
+
+div.album-detail {
+    margin: 30px 10px;
+}
+
+div.album-detail-photo {
+    float: left;
+    width: 220px;
+    height: 220px;
+}
+
+div.album-detail-photo > li {
+    font-size: 12px;
+    font-weight: 300;
+    font-style: normal;
+    list-style: none;
+    color:#888;
+}
+div.album-detail-photo li.title{
+    margin-top:1em;
+    font-weight:600;
+    font-size:14px;
+    color:#333;
+}
+
+table.photo-detail {
+    margin: 30px 50px 0 50px;
+    border: 1px solid #ccc;
+    padding: 20px 20px;
+    background-color:#fff;
+}
+
+table.photo-detail td {
+    width: 50%;
+    padding: 2em;
+}
+
+table.photo-detail ul li {
+    font-weight: bold;
+}
+
+table.photo-detail ul p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+img.thumbnail {
+    border:1px solid #ddd;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+div.clear_float {
+    clear: both;
+}

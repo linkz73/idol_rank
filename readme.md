@@ -135,3 +135,4 @@ docker-compose exec app python ./manage.py createsuperuser
 - 이미지 확인 : docker images
 - 이미지 삭제 : docker rmi 이미지ID
 - 이미지 강제 삭제  : docker rmi -f 이미지ID
+- docker-compose exec app python manage.py migrate

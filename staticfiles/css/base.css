@@ -1,0 +1,140 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body {
+    /*font-family: "Lucida Grande", Verdana, Arial, sans-serif;*/
+    font-family: 'Open Sans', 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+}
+
+html, body {background-color:#fcf2f7;}
+/* PAGE STRUCTURE */
+div#header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 30px;
+    width: 100%;
+    display: table;
+    background: #e9dada;
+}
+
+div#menu {
+    position: absolute;
+    top: 38px;
+    left: 0px;
+    height: 35px;
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    border-spacing: 40px 0px;
+    background: #e9dada;
+    font-size: 8px;
+    padding:0px;
+}
+
+div#content {
+    position: absolute;
+    top: 90px;
+    left: 50px;
+    right: 50px;
+}
+
+div#footer{
+    position: absolute;
+    bottom: 20px;
+    left: 50px;
+    right: 50px;
+    height: 30px;
+    color: #888;
+    text-align: center;
+    font-size: 12px;
+    padding: 1em;
+    border-top:1px solid #bbb;
+}
+
+/* HEADER */
+.maintitle {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10px 20px;
+    color: #514553;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.welcome {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    padding-right: 20px;
+    color: #ffc;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.welcome a:link, .welcome a:visited {
+    color: white;
+}
+
+/* MENU */
+div#menu a:link, div#menu a:visited {
+    color: #36c;
+}
+div#menu > ul {text-align:center; margin:0; padding:0px;}
+div#menu > ul > li{
+    display: inline-block;
+    margin:0;
+    vertical-align: middle;
+}
+div#menu > ul > li > a  {
+    font-weight: 300;
+    display: block;
+    padding:0.5em 1em;
+    font-size:14px;
+    text-align: center;}
+div#menu > ul > li > a:link,div#menu > ul > li > a:visited {color:#fff;}
+div#menu > ul > li > a:hover, div#menu > ul > li > a:active {background-color:#fff; color:#2c68b3;}
+/* pulldown menu */
+div#menu li  ul {
+    display:none;
+    position:absolute;
+    margin: 0;
+    padding:10px 10px 5px 10px;
+    list-style:none;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: white;
+    z-index: 1;
+}
+
+div#menu li:hover ul {
+    display:block;
+}
+
+/* LINK */
+a:link, a:visited {
+    color: #369;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* TABLE */
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    line-height: 18px;
+    border-bottom: 1px solid #eee;
+    /*vertical-align: top;*/
+    padding: 5px 15px;
+}
+
+table.change-list, table.change-list th, table.change-list td {
+    border: 1px solid #ccc;
+}

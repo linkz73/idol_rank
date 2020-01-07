@@ -1,3 +1,6 @@
-.vscode
+.vscode/
 *.log
 venv/
+_mysql/
+migrations/
+__pycache__/
