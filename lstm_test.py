@@ -16,7 +16,6 @@ from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
-from zigzag import *
 import configparser
 import warnings
 import sys

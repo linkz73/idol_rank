@@ -1,0 +1,97 @@
+h3 {
+font-size: 20px;
+font-weight: 700;
+color:black;
+margin: 0 11px;
+height: 26px;
+
+margin-block-end: 1em;
+/*margin-inline-start: 1px;*/
+/*margin-inline-end: 1px;*/
+}
+
+header {
+  text-align: center;
+  clear: both;
+  overflow: visible !important;
+}
+
+a {
+text-decoration: none;
+}
+
+header h3, header a{
+display: inline-block;
+text-align: center;
+}
+
+layout-bbs header .btn.pupple {
+  min-width: 78px;
+}
+
+.btn.pupple {
+  border-color: #706472;
+  color: #dd92f3;
+}
+.btn.sizeS {
+  border: 1px solid #8d8e9b;
+  font-size: 14px;
+  height: 32px;
+  line-height: 28px;
+  font-weight: 700;
+  /* padding: 0 13px; */
+  min-width: 0;
+}
+
+.btn {
+  display: inline-block;
+  /* vertical-align: top; */
+  background: #fff;
+  border: 1px solid #252525;
+  height: 40px;
+  line-height: 38px;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0 18px;
+  border-radius: 25px;
+  min-width: 95px;
+  text-align: center;
+  }
+
+  #img img {
+    width:700px;
+    height:150px;
+  }
+
+ .thum{
+        width: 5px;
+        height: 5px;
+        margin-right: 20px;
+ }
+
+/* 하단 테이블 CSS */
+table {
+width: 70%;
+margin:10px auto;
+border-collapse: collapse;
+border-spacing: 0;
+
+border-bottom: 3px solid #e4c5c5;
+border-top: 3px solid #e4c5c5;
+box-shadow: 10px 5px 5px #e9dada;
+padding: 3px;
+}
+
+center {
+
+margin: 5px;
+padding: 30px;
+}
+
+td, th {
+    text-align: center
+}
+
+.idol {
+    text-align :left
+}
