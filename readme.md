@@ -1,4 +1,6 @@
 # IDOL 랭킹 예측 사이트
+인기인/아이돌에 대한 인기 차트를 수집해, 랭킹을 시각화하고 수집된 데이터를 바탕으로 향후
+인기도에 대해 tensorflow, LSTM 모델링을 통해 예측하는 프로젝트
 
 ## 폴더, 파일 구조
 
@@ -9,6 +11,7 @@
  - static : django 이미지 빌드시 자동생성돼 마운트 됨. django 용 static 파일
  - media : django 이미지 빌드시 자동생성돼 마운트 됨. django 용 media 파일
  - templates : django 프로젝트를 위해 추가한 폴더. 사이트 베이스 템플릿 html 등
+ - web_crawl : 웹크롤링 수집 관련 파이썬 파일 및 딥러닝 모델
  - 기타 폴더 : django 프로젝트를 위해 추가한 폴더. 사이트 베이스 템플릿 등
  - 루트 파일 :
    * docker-compose.yml : docker-compose 를 사용해 이미지를 빌드하고 관리.
@@ -80,7 +83,7 @@ python manage.py runserver
 
 ## Docker 및 Docker-compose 관리
 1. docker desktop for windows 2.1.7.0 버전 이상 설치
-https://download.docker.com/win/edge/41561/Docker Desktop Installer.exe
+<https://download.docker.com/win/edge/41561/Docker%20Desktop%20Installer.exe>
 
 2. cmd 를 관리자 권한으로 실행
 
