@@ -1,11 +1,10 @@
 from selenium import webdriver
 import pandas as pd
-from IPython.display import display
+# from IPython.display import display #데이터 프레임을 볼 떄 사용하는 모듈
 import pymysql
 
 con = pymysql.connect(host = "localhost", user = "root", password ="1234",
                       db = "idol_rank")
-# conn=engine.connect()
 cur = con.cursor()
 
 # selenium 옵션 설정
@@ -33,7 +32,7 @@ for year in range(2018,2020,1):
                 items = driver.find_elements_by_tag_name("td")
                 spans = driver.find_elements_by_tag_name("span")
 
-
+                #이미지 링크 추출
                 for span in spans:
                     img_url = span.get_attribute("style")
                     if img_url:
@@ -41,23 +40,18 @@ for year in range(2018,2020,1):
                         img = img_url[1]
                         img = "https://www.idol-chart.com" + img
                         img_list.append(img)
-
+                
+                #이미지 링크를 제외한 나머지 데이터 추출
                 for item in items:
                     if item != None:
                         split_item = []
                         split_item.append(item.text)
                         result = list(map(lambda x: x.replace(',', "").replace(' ', ''), split_item))
                         total_m.append(result)
-                    # print(result)
-                    # total.append(result)
-                    # sub = []
-                    # for i in split_item:
-                    #     sub.append(i.replace(",",""))
-                    # total.append(sub)
-                # del total[0]
-                # 이중 리스트의 모양을 flatten 하게 하는 함수
+
+            # 이중 리스트의 모양을 flatten 하게 하는 함수
             total_m = sum(total_m, [])
-                # 일정한 크기로 나눠주는 함수
+            # 일정한 크기로 나눠주는 함수
             n = 9
             result = [total_m[i * n:(i + 1) * n] for i in range((len(total_m) + n - 1) // n)]
 
@@ -66,24 +60,16 @@ for year in range(2018,2020,1):
                     result[i].append(str(year) + str(month).rjust(2, '0'))
                     result[i].append(img_list[i])
 
-
             sub_df = pd.DataFrame(result, columns=['순위', 'idol', '음원/음반', '유튜브', '전문가/평점랭킹', '방송/포털/소셜', '총점', '순위변화', '아이돌 평점주기', '날짜', 'img'])
             df = df.append(sub_df)
 
 driver.close()
 
 df.drop(['순위','유튜브', '전문가/평점랭킹', '순위변화', '아이돌 평점주기'], axis='columns', inplace=True)
-# display(df)
-# df = pd.read_csv("id0l_csv")
 df_val = df.values.tolist()
-# print(df_val)
-# print(type(df_val))
-# print(df_val[0][1])
-# print(type(df_val[0][1]))
-# print(df_val[0][6])
-# print(type(df_val[0][6]))
 
-create_idol_sql = """CREATE TABLE idol_rank.idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(10) UNIQUE, idol_img VARCHAR(1000))"""
+#idol 테이블 생성
+create_idol_sql = """CREATE TABLE idol_rank.idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(30) UNIQUE, idol_img VARCHAR(1000))"""
 cur.execute(create_idol_sql)
 con.commit()
 
@@ -92,13 +78,20 @@ SELECT %s, %s
 FROM dual
 WHERE NOT EXISTS (SELECT *  FROM idol
 WHERE  idol_name = %s)"""
-
-val = [(df_val[i][1], df_val[i][6],df_val[i][1]) for i in range(len(df_val))]
-
-# print(val)
+val = [(df_val[i][0], df_val[i][5],df_val[i][0]) for i in range(len(df_val))]
 cur.executemany(insert_idol_sql,val)
 con.commit()
+
+#chart 테이블 생성
+create_chart_sql = """CREATE TABLE idol_rank.chart (chart_id INT AUTO_INCREMENT PRIMARY KEY, idol_id VARCHAR(30), chart_music INT,
+chart_media INT, chart_protal INT, chart_total INT, chart_date INT)"""
+cur.execute(create_chart_sql)
+con.commit()
+
+insert_chart_sql = """INSERT INTO chart(idol_id, chart_music, chart_media, chart_total, chart_date)
+VALUES (%s, %s, %s, %s, %s)"""
+value = [(df_val[i][0],df_val[i][1],df_val[i][2],df_val[i][3],df_val[i][4])for i in range(len(df_val))]
+cur.executemany(insert_chart_sql,value)
+con.commit()
+
 con.close()
-# df_idol = df.loc[:,['idol','img']]
-# df_chart = df.loc[:,['idol','음원/음반','방송/포털/소셜', '총점','날짜']]
-# idol_name = df_idol.loc[1,['idol']]
