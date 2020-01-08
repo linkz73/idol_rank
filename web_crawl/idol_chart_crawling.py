@@ -1,6 +1,6 @@
 from selenium import webdriver
 import pandas as pd
-# from IPython.display import display #데이터 프레임을 볼 떄 사용하는 모듈
+# from IPython.display import display #데이터 프레임을 볼 때 사용하는 모듈
 import pymysql
 
 con = pymysql.connect(host = "localhost", user = "root", password ="1234",
