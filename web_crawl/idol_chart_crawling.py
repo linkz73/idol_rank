@@ -69,9 +69,9 @@ df.drop(['순위','유튜브', '전문가/평점랭킹', '순위변화', '아이
 df_val = df.values.tolist()
 
 #idol 테이블 생성
-create_idol_sql = """CREATE TABLE django_app.idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(30) UNIQUE, idol_img VARCHAR(1000))"""
-cur.execute(create_idol_sql)
-con.commit()
+# create_idol_sql = """CREATE TABLE django_app.idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(30) UNIQUE, idol_img VARCHAR(1000))"""
+# cur.execute(create_idol_sql)
+# con.commit()
 
 insert_idol_sql = """INSERT INTO django_app.idol(idol_name, idol_img)
 SELECT %s, %s
