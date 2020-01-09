@@ -84,7 +84,7 @@ con.commit()
 
 #chart 테이블 생성
 create_chart_sql = """CREATE TABLE django_app.temp_chart (chart_id INT AUTO_INCREMENT PRIMARY KEY, idol_id VARCHAR(30), chart_music INT,
-chart_media INT, chart_protal INT, chart_total INT, chart_date INT)"""
+chart_media INT, chart_portal INT, chart_total INT, chart_date INT)"""
 cur.execute(create_chart_sql)
 con.commit()
 

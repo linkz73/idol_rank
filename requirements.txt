@@ -14,3 +14,4 @@ selenium
 # Keras
 scikit-learn
 cryptography
+lxml
