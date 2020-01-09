@@ -4,7 +4,7 @@ import pandas as pd
 import pymysql
 
 con = pymysql.connect(host = "localhost", user = "root", password ="1234",
-                      db = "idol_rank")
+                      db = "django_app")
 cur = con.cursor()
 
 # selenium 옵션 설정
@@ -13,7 +13,7 @@ options.add_argument("headless") # 속도 개선
 # options.add_argument("disable-gpu") # 그래픽 카드 미사용
 options.add_argument('window-size=1920x1080')
 
-driver = webdriver.Chrome('chromedriver.exe', chrome_options=options)
+driver = webdriver.Chrome('C:\PythonProjects\idol_rank\web_crawl\chromedriver.exe', chrome_options=options)
 
 df = pd.DataFrame(columns=['순위', 'idol', '음원/음반', '유튜브', '전문가/평점랭킹', '방송/포털/소셜', '총점', '순위변화', '아이돌 평점주기', '날짜', 'img'])
 for year in range(2018,2020,1):
@@ -69,26 +69,26 @@ df.drop(['순위','유튜브', '전문가/평점랭킹', '순위변화', '아이
 df_val = df.values.tolist()
 
 #idol 테이블 생성
-create_idol_sql = """CREATE TABLE idol_rank.idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(30) UNIQUE, idol_img VARCHAR(1000))"""
+create_idol_sql = """CREATE TABLE django_app.temp_idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(30) UNIQUE, idol_img VARCHAR(1000))"""
 cur.execute(create_idol_sql)
 con.commit()
 
-insert_idol_sql = """INSERT INTO idol(idol_name, idol_img)
+insert_idol_sql = """INSERT INTO django_app.temp_idol(idol_name, idol_img)
 SELECT %s, %s
 FROM dual
-WHERE NOT EXISTS (SELECT *  FROM idol
+WHERE NOT EXISTS (SELECT *  FROM django_app.temp_idol
 WHERE  idol_name = %s)"""
 val = [(df_val[i][0], df_val[i][5],df_val[i][0]) for i in range(len(df_val))]
 cur.executemany(insert_idol_sql,val)
 con.commit()
 
 #chart 테이블 생성
-create_chart_sql = """CREATE TABLE idol_rank.chart (chart_id INT AUTO_INCREMENT PRIMARY KEY, idol_id VARCHAR(30), chart_music INT,
+create_chart_sql = """CREATE TABLE django_app.temp_chart (chart_id INT AUTO_INCREMENT PRIMARY KEY, idol_id VARCHAR(30), chart_music INT,
 chart_media INT, chart_protal INT, chart_total INT, chart_date INT)"""
 cur.execute(create_chart_sql)
 con.commit()
 
-insert_chart_sql = """INSERT INTO chart(idol_id, chart_music, chart_media, chart_total, chart_date)
+insert_chart_sql = """INSERT INTO django_app.temp_chart(idol_id, chart_music, chart_media, chart_total, chart_date)
 VALUES (%s, %s, %s, %s, %s)"""
 value = [(df_val[i][0],df_val[i][1],df_val[i][2],df_val[i][3],df_val[i][4])for i in range(len(df_val))]
 cur.executemany(insert_chart_sql,value)

@@ -13,3 +13,4 @@ selenium
 # tensorflow
 # Keras
 scikit-learn
+cryptography
