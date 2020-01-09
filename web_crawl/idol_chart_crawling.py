@@ -1,9 +1,10 @@
 from selenium import webdriver
 import pandas as pd
+import os
 # from IPython.display import display #데이터 프레임을 볼 때 사용하는 모듈
 import pymysql
 
-con = pymysql.connect(host = "localhost", user = "root", password ="1234",
+con = pymysql.connect(host = "localhost", user = "django_app", password ="django_app123",
                       db = "django_app")
 cur = con.cursor()
 
@@ -13,7 +14,11 @@ options.add_argument("headless") # 속도 개선
 # options.add_argument("disable-gpu") # 그래픽 카드 미사용
 options.add_argument('window-size=1920x1080')
 
-driver = webdriver.Chrome('C:\PythonProjects\idol_rank\web_crawl\chromedriver.exe', chrome_options=options)
+# OS 디렉터리 경로명을 가져옴
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+path = os.path.join(BASE_DIR, 'web_crawl/chromedriver.exe')
+
+driver = webdriver.Chrome(path, chrome_options=options)
 
 df = pd.DataFrame(columns=['순위', 'idol', '음원/음반', '유튜브', '전문가/평점랭킹', '방송/포털/소셜', '총점', '순위변화', '아이돌 평점주기', '날짜', 'img'])
 for year in range(2018,2020,1):
@@ -69,9 +74,9 @@ df.drop(['순위','유튜브', '전문가/평점랭킹', '순위변화', '아이
 df_val = df.values.tolist()
 
 #idol 테이블 생성
-create_idol_sql = """CREATE TABLE django_app.idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(30) UNIQUE, idol_img VARCHAR(1000))"""
-cur.execute(create_idol_sql)
-con.commit()
+# create_idol_sql = """CREATE TABLE django_app.idol (idol_id INT AUTO_INCREMENT PRIMARY KEY, idol_name VARCHAR(30) UNIQUE, idol_img VARCHAR(1000))"""
+# cur.execute(create_idol_sql)
+# con.commit()
 
 insert_idol_sql = """INSERT INTO django_app.idol(idol_name, idol_img)
 SELECT %s, %s

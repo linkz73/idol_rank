@@ -1,6 +1,6 @@
 import pymysql
 
-con = pymysql.connect(host = "localhost", user = "root", password ="1234",
+con = pymysql.connect(host = "localhost", user = "django_app", password ="django_app123",
                       db = "django_app")
 cur = con.cursor()
 
