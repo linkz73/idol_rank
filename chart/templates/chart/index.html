@@ -36,14 +36,24 @@
 {% block content %}
 <body>
     <h2 id="title"> 아이돌 TOP10 예측 차트</h2>
-    {% comment %} latest_list : {{ latest_list }} {% endcomment %}
     {% if latest_list %}
-
         <ul>
         {% for item in latest_list %}
-            <li>{{ item.chart_id }}, {{ item.chart_music }}, {{ item.chart_media }}, {{ item.chart_portal }}, {{ item.chart_total }}, {{ item.chart_date }}, ({{ item.idol_id }} : item.idol_id 외래키 {{ item.idol_id.idol_img }})    </li>
+            <li>{{ item.chart_id }}, {{ item.chart_music }}, {{ item.chart_media }}, {{ item.chart_portal }}, {{ item.chart_total }}, {{ item.chart_date }}, ({{ item.idol_id }} : 이름 {{ item.idol.idol_name }} / 이미지 {{ item.idol.idol_img }})    </li>
         {% endfor %}
         </ul>
+    {% else %}
+        <p>No Data</p>
+    {% endif %}
+
+
+    {% if ord_dict %}
+        <ul>
+        {% for key,value in ord_dict.items %}
+            <li>{{ key }}, {{ value.a }}, {{ value.b }}</li>
+        {% endfor %}
+        </ul>
+       
     {% else %}
         <p>No Data</p>
     {% endif %}
@@ -189,7 +199,7 @@
                         display: true,
                         ticks: {
                             min: 0,
-                            max: 20000,
+                            //max: 20000,
                             stepSize: 2000,
                             callback:function(value, index, values){
                                 return value;
