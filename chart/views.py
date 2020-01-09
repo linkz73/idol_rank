@@ -27,9 +27,9 @@ from dateutil.relativedelta import relativedelta
 #     }
 #     return HttpResponse(template.render(context, request))
 
-# select_related 는 INNER JOIN 으로 쿼리셋을 가져온다.
-# prefetch_related 는 모델별로 쿼리를 실행해 쿼리셋을 가져온다.
-# 이 모든건 qeryset들이 캐싱되기 때문에 가능
+# select_related 는 INNER JOIN 으로 쿼리셋을 가져옴
+# prefetch_related 는 모델별로 쿼리를 실행해 쿼리셋을 가져옴
+# qeryset들이 캐싱되기 때문에 가능
 
 def index(request):    
     # latest_list = Chart.objects.order_by('-chart_id').all()
@@ -52,9 +52,6 @@ def index(request):
         temp_date += relativedelta(months=1)
         if temp_date > recent_date:
             break
-    # for i in date_list:
-    #     labelMonth = i[0:4] + "년 " + i[4:6] + "월"
-    #     label_list.append(labelMonth)
 
     top10_idol = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]  # 테이블 조인해서 chart_date 로 where 
     i = 0
@@ -74,23 +71,10 @@ def index(request):
     for i in date_list:
         labelMonth = i[0:4] + "년 " + i[4:6] + "월"
         month_list.append(labelMonth)
-        print(labelMonth)
 
-        # recent_date0 = Chart.objects.select_related('idol').order_by('-chart_date').values()[:1]
-        # recent_date = str(recent_date0[0]['chart_date'])
-        # recent_date = datetime.datetime.strptime(recent_date, "%Y%m")
-        
-        # ord_dict['2015-06-20'] = {}
-        # ord_dict['2015-06-20']['a'] = '1'
-        # ord_dict['2015-06-20']['b'] = '2'
-        # ord_dict['2015-06-21'] = {}
-        # ord_dict['2015-06-21']['a'] = '10'
-        # ord_dict['2015-06-21']['b'] = '20'
-    print(month_list)
     # latest_list = Chart.objects.select_related('idol').order_by('chart_date') #foreignkey 변수 이름
     
     context = {'month_list': month_list, 'label_list': label_list, 'ord_dict':ord_dict}
-    # context = {'latest_list': latest_list}
     return render(request, 'chart/index.html', context)
 
 # class ChartTV(TemplateView):

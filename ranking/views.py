@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, TemplateView, FormView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
 
-from .models import Ranking
+from chart.models import Chart, Idol
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -21,7 +21,7 @@ from django_app.views import LoginRequiredMixin
 def index(request):    
     ranking_list = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]  # 테이블 조인해서 chart_date 로 where 
     context = {'ranking_list': ranking_list}
-    return render(request, 'chart/index.html', context)
+    return render(request, 'ranking/index.html', context)
 
 # class ChartTV(TemplateView):
 #     model = Chart

@@ -28,7 +28,6 @@
 {% endblock %}
 {% block extrascript %}
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
     <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
 {% endblock %}
@@ -56,14 +55,14 @@
         var pointStyle = ['circle','triangle','rect','rectRounded','rectRot','cross','crossRot','star','line','dash']
         // 추후 동적으로 변경
         var MONTHS = ['2018년 1월', '2018년 2월', '2018년 3월', '2018년 4월', '2018년 5월', '2018년 6월', '2018년 7월'];
-        var colors = ['#ff6384','#ff6384','#ff9f40','#ffcd56','#4bc0c0','#36a2eb','#9966ff','#c9cbcf','#c0504e','#23bfaa','#468847']
+        var colors = ['#ff6384','#550384','#ff9f40','#ffcd56','#4bc0c0','#36a2eb','#9966ff','#c9cbcf','#c0504e','#469947']
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: MONTHS,
                 datasets: [
-                    // 루프 생성 필요
+                    // 루프 
                     {% if ord_dict %}
                         {% for key,value in ord_dict.items %}
                         {
@@ -73,7 +72,7 @@
                             label: '{{ value.name }}',
                             fill: false,
                             pointStyle: pointStyle[{{ key }}],
-                            pointRadius: 7,
+                            pointRadius: 6,
                             pointHoverRadius: 10,
                         },
                         {% endfor %}
@@ -82,7 +81,6 @@
             },
             options: {
                 responsive: true, //차트 크기 수정
-
                 tooltips: {
                     mode: 'index',
                     intersect: false,
@@ -119,7 +117,14 @@
         var frame_duration = 3000;
         var i=0;
         var month_full_list = {{ month_list|safe|escape }} 
-        var labelName = {{ label_list|safe|escape }} 
+        var labelName = {{ label_list|safe|escape }}
+        // 루프 
+        {% if ord_dict %}
+        {% for key,value in ord_dict.items %}
+            myChart.data.datasets[{{ key }}].data = {{ value.total|safe|escape }}
+        {% endfor %}
+        {% endif %}
+
         d3.interval(
             function(){
                 if (i > 10) {
@@ -128,7 +133,6 @@
                 else {
                     for (var j=0; j<10; j++) {
                         myChart.data.datasets[j].label = labelName[j]
-                        //myChart.data.datasets[j].data = [1+i, 2+i, 3+i, 4+i, 5+i, 6+i];
                         myChart.data.datasets[j].data = [
                             Math.random()*10000,
                             Math.random()*10000,
@@ -146,14 +150,7 @@
             }, 
             frame_duration
         );
-        
-        /*
-        window.onload = function() {
-            console.log("onload");
-            var ctx = document.getElementById('canvas').getContext('2d');
-            window.myLine = new Chart(ctx, config);
-            console.log("onload after");
-        };*/
+
     </script>
 
 <!-- <script type="text/javascript"> //스크롤 맨 끝 이벤트
