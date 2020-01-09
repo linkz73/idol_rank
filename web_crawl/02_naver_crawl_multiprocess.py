@@ -11,7 +11,7 @@ cur = con.cursor()
 
 
 def chart_portal(i, names, dates):
-    name_url = urllib.parse.quote_plus(names[i])
+    name_url = urllib.parse.quote_plus(str(names[i]))
     url = 'https://search.naver.com/search.naver?where=news&query=' + name_url + '&sm=tab_opt&sort=0&photo=0&field=0&reporter_article=&pd=3&ds=' \
           + str(dates[i])[:4] + "." + str(dates[i])[4:] + '.01&de=' + str(dates[i])[:4] + "." + str(dates[i])[4:] \
           + '.31&docid=&nso=so%3Ar%2Cp%3Afrom' + str(dates[i]) + '01to' + str(dates[i]) + '31%2Ca%3Aall&mynews=0&refresh_start=0&related=0'
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     cur.execute(nrow_sql)
     nrow = cur.fetchone()[0]
 
-    list = []
+    result_pool = []
     with Pool(processes=6) as p:
         try:
             res = [p.apply_async(chart_portal, args=(i, names, dates)) for i in range(0,nrow,1)]

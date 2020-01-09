@@ -36,7 +36,7 @@
 {% block content %}
 <body>
     <h2 id="title"> 아이돌 TOP10 예측 차트</h2>
-    {% if latest_list %}
+    {% comment %} {% if latest_list %}
         <ul>
         {% for item in latest_list %}
             <li>{{ item.chart_id }}, {{ item.chart_music }}, {{ item.chart_media }}, {{ item.chart_portal }}, {{ item.chart_total }}, {{ item.chart_date }}, ({{ item.idol_id }} : 이름 {{ item.idol.idol_name }} / 이미지 {{ item.idol.idol_img }})    </li>
@@ -44,19 +44,7 @@
         </ul>
     {% else %}
         <p>No Data</p>
-    {% endif %}
-
-
-    {% if ord_dict %}
-        <ul>
-        {% for key,value in ord_dict.items %}
-            <li>{{ key }}, {{ value.a }}, {{ value.b }}</li>
-        {% endfor %}
-        </ul>
-       
-    {% else %}
-        <p>No Data</p>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     <div>
         <canvas id="myChart"></canvas>
@@ -67,6 +55,7 @@
         var pointStyle = ['circle','triangle','rect','rectRounded','rectRot','cross','crossRot','star','line','dash']
         // 추후 동적으로 변경
         var MONTHS = ['2018년 1월', '2018년 2월', '2018년 3월', '2018년 4월', '2018년 5월', '2018년 6월', '2018년 7월'];        
+        var colors = ['#ff6384','#ff6384','#ff9f40','#ffcd56','#4bc0c0','#36a2eb','#9966ff','#c9cbcf','#c0504e','#23bfaa','#468847']
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
             type: 'line',
@@ -74,10 +63,33 @@
                 labels: MONTHS,
                 datasets: [
                     // 루프 생성 필요
+                    {% if ord_dict %}
+                        {% with i=0 %}
+                        {% endwith %}
+                        {% for key,value in ord_dict.items %}
+                        {
+                            {% comment %} {% with total_list = value.total|slice'0:7' %} {% endcomment %}
+                                {% comment %} data: {{ total_list }}, {% endcomment %}
+                                data: {{ value.total }},
+                            {% comment %} {% endwith %} {% endcomment %}
+                            borderWidth: 3,
+                            borderColor:colors[0],
+                            label: '{{ value.name }}',
+                            fill: false,
+                            pointStyle: pointStyle[0],
+                            pointRadius: 7,
+                            pointHoverRadius: 10,
+                        },
+                        {% comment %} {% with i = i + 1 %}
+                        {% endwith %} {% endcomment %}
+                        {% endfor %}
+                        
+                    {% endif %}
+                    /*
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#ff6384",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[0],
@@ -87,7 +99,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#ff9f40",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[1],
@@ -97,7 +109,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#ffcd56",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[2],
@@ -107,7 +119,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#4bc0c0",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[3],
@@ -117,7 +129,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#36a2eb",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[4],
@@ -127,7 +139,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#9966ff",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[5],
@@ -137,7 +149,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#c9cbcf",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[6],
@@ -147,7 +159,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#c0504e",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[7],
@@ -157,7 +169,7 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#23bfaa",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[8],
@@ -167,13 +179,13 @@
                     {
                         data: [1, 2, 3, 4, 5, 6, 7],
                         borderWidth: 3,
-                        borderColor:"#468847",
+                        borderColor:"",
                         label: 'idol',
                         fill: false,
                         pointStyle: pointStyle[9],
                         pointRadius: 7,
                         pointHoverRadius: 10,
-                    },
+                    },*/
                 ]
             },
             options: {
@@ -222,7 +234,7 @@
                 }
                 else {
                     for (var j=0; j<10; j++) {
-                         myChart.data.datasets[j].label = labelName[j]
+                        myChart.data.datasets[j].label = labelName[j]
                         //myChart.data.datasets[j].data = [1+i, 2+i, 3+i, 4+i, 5+i, 6+i];
                         myChart.data.datasets[j].data = [
                             Math.random()*10000,

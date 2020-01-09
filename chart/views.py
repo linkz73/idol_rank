@@ -16,6 +16,8 @@ from django_app.views import LoginRequiredMixin
 
 from collections import OrderedDict  # dictionary 객체를 render 로 전달하기 위함
 import pdb  # 디버깅 용
+import datetime
+from dateutil.relativedelta import relativedelta
 
 # def index(request):
 #     latest_list = Chart.objects.order_by('-chart_id')[:5]
@@ -32,23 +34,61 @@ import pdb  # 디버깅 용
 def index(request):    
     # latest_list = Chart.objects.order_by('-chart_id').all()
     # temp_list = Chart.objects.all()
-    start_date = '201801'
-    
+    start_date = 201801
+    start_datef = datetime.datetime.strptime(str(start_date), "%Y%m")
     # print("start date is2 ",start_date)
     # pdb.set_trace()  # 디버깅. 
 
     ord_dict = OrderedDict()
-    ord_dict['2015-06-20'] = {}
-    ord_dict['2015-06-20']['a'] = '1'
-    ord_dict['2015-06-20']['b'] = '2'
-    ord_dict['2015-06-21'] = {}
-    ord_dict['2015-06-21']['a'] = '10'
-    ord_dict['2015-06-21']['b'] = '20'
 
-    latest_list = Chart.objects.select_related('idol').order_by('chart_date') #foreignkey 변수 이름
-    for item in latest_list:
-        print(item.idol.idol_name)
-    context = {'latest_list': latest_list, 'ord_dict':ord_dict}
+    recent_date0 = Chart.objects.order_by('-chart_date').values()[:1]
+    recent_date_n = str(recent_date0[0]['chart_date'])
+    recent_date = datetime.datetime.strptime(recent_date_n, "%Y%m")
+    temp_date = start_datef
+    date_list = []
+
+    while True:
+        date_list.append(temp_date.strftime("%Y%m"))
+        temp_date += relativedelta(months=1)
+        if temp_date > recent_date:
+            break
+    # for i in date_list:
+    #     labelMonth = i[0:4] + "년 " + i[4:6] + "월"
+    #     label_list.append(labelMonth)
+
+    top10_idol = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]
+
+    for ii in top10_idol:
+        total_list = []
+        print("idol name ", ii.idol_id, ii.idol.idol_name)
+        temp_list = Chart.objects.select_related('idol').filter(idol_id=int(ii.idol_id)).order_by('chart_total')
+        for item in temp_list:
+            total_list.append(item.chart_total)
+        ord_dict[ii.idol.idol_name] = {}
+        ord_dict[ii.idol.idol_name]['name'] = ii.idol.idol_name
+        ord_dict[ii.idol.idol_name]['total'] = total_list
+    
+    label_list = []
+    for i in date_list:
+        labelMonth = i[0:4] + "년 " + i[4:6] + "월"
+        label_list.append(labelMonth)
+        print(labelMonth)
+
+        # recent_date0 = Chart.objects.select_related('idol').order_by('-chart_date').values()[:1]
+        # recent_date = str(recent_date0[0]['chart_date'])
+        # recent_date = datetime.datetime.strptime(recent_date, "%Y%m")
+        
+        # ord_dict['2015-06-20'] = {}
+        # ord_dict['2015-06-20']['a'] = '1'
+        # ord_dict['2015-06-20']['b'] = '2'
+        # ord_dict['2015-06-21'] = {}
+        # ord_dict['2015-06-21']['a'] = '10'
+        # ord_dict['2015-06-21']['b'] = '20'
+    print(label_list)
+    # latest_list = Chart.objects.select_related('idol').order_by('chart_date') #foreignkey 변수 이름
+    
+    context = {'label_list': label_list, 'ord_dict':ord_dict}
+    # context = {'latest_list': latest_list}
     return render(request, 'chart/index.html', context)
 
 # class ChartTV(TemplateView):
