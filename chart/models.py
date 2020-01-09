@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Idol(models.Model):
     idol_id = models.AutoField(primary_key=True)
-    idol_name = models.CharField('IDOL NAME', null=False, max_length=100)
+    idol_name = models.CharField('IDOL NAME', null=False, max_length=100, unique=True)
     idol_img = models.CharField('IDOL Image', max_length=200, blank=True)
     class Meta:
         verbose_name = 'idol'  # 이 이름을 이용해서 표시 가능
