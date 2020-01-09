@@ -4,7 +4,7 @@ con = pymysql.connect(host = "localhost", user = "django_app", password ="django
                       db = "django_app")
 cur = con.cursor()
 
-idol_id_sql = """UPDATE django_app.temp_chart SET idol_id = (SELECT temp_idol.idol_id FROM temp_idol WHERE temp_chart.idol_id = temp_idol.idol_name)"""
+idol_id_sql = """UPDATE django_app.temp_chart SET idol_id = (SELECT idol.idol_id FROM idol WHERE temp_chart.idol_id = idol.idol_name)"""
 cur.execute(idol_id_sql)
 con.commit()
 
