@@ -53,9 +53,12 @@ if __name__ == '__main__':
 
     list = []
     with Pool(processes=6) as p:
-        res = [p.apply_async(chart_portal, args=(i, names, dates))
-               for i in range(0,nrow,1)]
-        result_pool = [r.get() for r in res]
+        try:
+            res = [p.apply_async(chart_portal, args=(i, names, dates)) for i in range(0,nrow,1)]
+            result_pool = [r.get() for r in res]
+        except Exception as e:
+            print("exceptions is ", e)
+            pass
 
     update_chart_sql = """UPDATE django_app.temp_chart
                         SET chart_portal = %s
