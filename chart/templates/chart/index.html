@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% block title %}chart{% endblock %}
+{% load static %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <style>
+
+    #title{
+        margin-top:130px;
+        margin-bottom:30px;
+        text-align:center;
+    }
+
+    canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        margin:5px;
+    }
+
+    #myChart{
+        width:50%;
+        max-width:1200px;
+        margin:20px auto;
+    }
+
+    </style>
+{% endblock %}
+{% block extrascript %}
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
+    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+{% endblock %}
+
+{% block content %}
+<body>
+    <h2 id="title"> 아이돌 TOP10 예측 차트</h2>
+    {% comment %} latest_list : {{ latest_list }} {% endcomment %}
+    {% if latest_list %}
+
+        <ul>
+        {% for item in latest_list %}
+            <li>{{ item.chart_id }}, {{ item.chart_music }}, {{ item.chart_media }}, {{ item.chart_portal }}, {{ item.chart_total }}, {{ item.chart_date }}, ({{ item.idol_id }} : item.idol_id 외래키 {{ item.idol_id.idol_img }})    </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No Data</p>
+    {% endif %}
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <br>
+    <br>
+    <script> //차트 가로축
+        var pointStyle = ['circle','triangle','rect','rectRounded','rectRot','cross','crossRot','star','line','dash']
+        // 추후 동적으로 변경
+        var MONTHS = ['2018년 1월', '2018년 2월', '2018년 3월', '2018년 4월', '2018년 5월', '2018년 6월', '2018년 7월'];        
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: MONTHS,
+                datasets: [
+                    // 루프 생성 필요
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#ff6384",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[0],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#ff9f40",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[1],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#ffcd56",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[2],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#4bc0c0",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[3],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#36a2eb",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[4],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#9966ff",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[5],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#c9cbcf",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[6],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#c0504e",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[7],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#23bfaa",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[8],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                    {
+                        data: [1, 2, 3, 4, 5, 6, 7],
+                        borderWidth: 3,
+                        borderColor:"#468847",
+                        label: 'idol',
+                        fill: false,
+                        pointStyle: pointStyle[9],
+                        pointRadius: 7,
+                        pointHoverRadius: 10,
+                    },
+                ]
+            },
+            options: {
+                responsive: true, //차트 크기 수정
+
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{ // x축
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{ // y축
+                        display: true,
+                        ticks: {
+                            min: 0,
+                            max: 20000,
+                            stepSize: 2000,
+                            callback:function(value, index, values){
+                                return value;
+                            }
+                        }
+                    }]
+                },
+            }
+        });
+        myChart.data.labels = MONTHS
+                
+        myChart.update();
+        var frame_duration = 3000;
+        var i=0;
+        var labelName = ['아이유','태연','방탄소년단','아이유','태연','방탄소년단','태연','방탄소년단','태연','방탄소년단']
+        d3.interval(
+            function(){
+                if (i > 10) {
+                    this.stop();
+                }
+                else {
+                    for (var j=0; j<10; j++) {
+                         myChart.data.datasets[j].label = labelName[j]
+                        //myChart.data.datasets[j].data = [1+i, 2+i, 3+i, 4+i, 5+i, 6+i];
+                        myChart.data.datasets[j].data = [
+                            Math.random()*10000,
+                            Math.random()*10000,
+                            Math.random()*10000,
+                            Math.random()*10000,
+                            Math.random()*10000,
+                            Math.random()*10000,
+                            Math.random()*10000
+                        ];
+                    }
+                    myChart.update();
+                }
+                i=i+1;
+                console.log(i)
+            }, 
+            frame_duration
+        );
+        
+        /*
+        window.onload = function() {
+            console.log("onload");
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myLine = new Chart(ctx, config);
+            console.log("onload after");
+        };*/
+    </script>
+
+<!-- <script type="text/javascript"> //스크롤 맨 끝 이벤트
+    $(window).scroll(function(){
+    if ($(window).scrollTop() != $(document).height() - $(window).height())
+    {
+        location.href ="chart_rank.html"
+    }
+    });
+
+</script>
+-->
+{% endblock content %}
+
+{% block footer %}
+    <div id="footer">&copy; Django for Python 2019.</div>
+{% endblock %}
