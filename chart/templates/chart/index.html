@@ -36,6 +36,7 @@
 {% block content %}
 <body>
     <h2 id="title"> 아이돌 TOP10 예측 차트</h2>
+
     {% comment %} {% if latest_list %}
         <ul>
         {% for item in latest_list %}
@@ -54,7 +55,7 @@
     <script> //차트 가로축
         var pointStyle = ['circle','triangle','rect','rectRounded','rectRot','cross','crossRot','star','line','dash']
         // 추후 동적으로 변경
-        var MONTHS = ['2018년 1월', '2018년 2월', '2018년 3월', '2018년 4월', '2018년 5월', '2018년 6월', '2018년 7월'];        
+        var MONTHS = ['2018년 1월', '2018년 2월', '2018년 3월', '2018년 4월', '2018년 5월', '2018년 6월', '2018년 7월'];
         var colors = ['#ff6384','#ff6384','#ff9f40','#ffcd56','#4bc0c0','#36a2eb','#9966ff','#c9cbcf','#c0504e','#23bfaa','#468847']
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
@@ -64,128 +65,19 @@
                 datasets: [
                     // 루프 생성 필요
                     {% if ord_dict %}
-                        {% with i=0 %}
-                        {% endwith %}
                         {% for key,value in ord_dict.items %}
                         {
-                            {% comment %} {% with total_list = value.total|slice'0:7' %} {% endcomment %}
-                                {% comment %} data: {{ total_list }}, {% endcomment %}
-                                data: {{ value.total }},
-                            {% comment %} {% endwith %} {% endcomment %}
+                            data: {{ value.total|slice:":7" }},
                             borderWidth: 3,
-                            borderColor:colors[0],
+                            borderColor:colors[{{ key }}],
                             label: '{{ value.name }}',
                             fill: false,
-                            pointStyle: pointStyle[0],
+                            pointStyle: pointStyle[{{ key }}],
                             pointRadius: 7,
                             pointHoverRadius: 10,
                         },
-                        {% comment %} {% with i = i + 1 %}
-                        {% endwith %} {% endcomment %}
                         {% endfor %}
-                        
                     {% endif %}
-                    /*
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[0],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[1],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[2],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[3],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[4],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[5],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[6],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[7],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[8],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },
-                    {
-                        data: [1, 2, 3, 4, 5, 6, 7],
-                        borderWidth: 3,
-                        borderColor:"",
-                        label: 'idol',
-                        fill: false,
-                        pointStyle: pointStyle[9],
-                        pointRadius: 7,
-                        pointHoverRadius: 10,
-                    },*/
                 ]
             },
             options: {
@@ -226,7 +118,8 @@
         myChart.update();
         var frame_duration = 3000;
         var i=0;
-        var labelName = ['아이유','태연','방탄소년단','아이유','태연','방탄소년단','태연','방탄소년단','태연','방탄소년단']
+        var month_full_list = {{ month_list|safe|escape }} 
+        var labelName = {{ label_list|safe|escape }} 
         d3.interval(
             function(){
                 if (i > 10) {

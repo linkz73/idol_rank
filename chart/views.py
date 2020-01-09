@@ -56,22 +56,24 @@ def index(request):
     #     labelMonth = i[0:4] + "년 " + i[4:6] + "월"
     #     label_list.append(labelMonth)
 
-    top10_idol = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]
-
+    top10_idol = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]  # 테이블 조인해서 chart_date 로 where 
+    i = 0
+    label_list = []
     for ii in top10_idol:
         total_list = []
-        print("idol name ", ii.idol_id, ii.idol.idol_name)
+        label_list.append(ii.idol.idol_name)
         temp_list = Chart.objects.select_related('idol').filter(idol_id=int(ii.idol_id)).order_by('chart_total')
         for item in temp_list:
             total_list.append(item.chart_total)
-        ord_dict[ii.idol.idol_name] = {}
-        ord_dict[ii.idol.idol_name]['name'] = ii.idol.idol_name
-        ord_dict[ii.idol.idol_name]['total'] = total_list
+        ord_dict[i] = {}
+        ord_dict[i]['name'] = ii.idol.idol_name
+        ord_dict[i]['total'] = total_list
+        i += 1
     
-    label_list = []
+    month_list = []
     for i in date_list:
         labelMonth = i[0:4] + "년 " + i[4:6] + "월"
-        label_list.append(labelMonth)
+        month_list.append(labelMonth)
         print(labelMonth)
 
         # recent_date0 = Chart.objects.select_related('idol').order_by('-chart_date').values()[:1]
@@ -84,10 +86,10 @@ def index(request):
         # ord_dict['2015-06-21'] = {}
         # ord_dict['2015-06-21']['a'] = '10'
         # ord_dict['2015-06-21']['b'] = '20'
-    print(label_list)
+    print(month_list)
     # latest_list = Chart.objects.select_related('idol').order_by('chart_date') #foreignkey 변수 이름
     
-    context = {'label_list': label_list, 'ord_dict':ord_dict}
+    context = {'month_list': month_list, 'label_list': label_list, 'ord_dict':ord_dict}
     # context = {'latest_list': latest_list}
     return render(request, 'chart/index.html', context)
 
