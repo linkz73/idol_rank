@@ -33,13 +33,9 @@ from dateutil.relativedelta import relativedelta
 
 def index(request):    
     # latest_list = Chart.objects.order_by('-chart_id').all()
-    # temp_list = Chart.objects.all()
     start_date = 201801
     start_datef = datetime.datetime.strptime(str(start_date), "%Y%m")
-    # print("start date is2 ",start_date)
     # pdb.set_trace()  # 디버깅. 
-    # todo : 몇명 데이터가 중간에 빔. 결측치 처리 필요    
-
     ord_dict = OrderedDict()
 
     recent_date0 = Chart.objects.order_by('-chart_date').values()[:1]

@@ -111,37 +111,32 @@
                 },
             }
         });
-        myChart.data.labels = MONTHS
+        //myChart.data.labels = MONTHS
                 
         myChart.update();
-        var frame_duration = 3000;
+        var frame_duration = 1000;
         var i=0;
+        var idol_mon_data = new Array();
         var month_full_list = {{ month_list|safe|escape }} 
         var labelName = {{ label_list|safe|escape }}
         // 루프 
         {% if ord_dict %}
-        {% for key,value in ord_dict.items %}
-            myChart.data.datasets[{{ key }}].data = {{ value.total|safe|escape }}
-        {% endfor %}
+            {% for key,value in ord_dict.items %}
+            idol_mon_data[{{ key }}] = {{ value.total|safe|escape }};
+            {% endfor %}
         {% endif %}
-
+        var inter_mon = parseInt(month_full_list.length - MONTHS.length)
+        console.log(inter_mon)
         d3.interval(
             function(){
-                if (i > 10) {
+                if (i > inter_mon) {
                     this.stop();
                 }
                 else {
+                    myChart.data.labels = month_full_list.slice(i, i+7)
                     for (var j=0; j<10; j++) {
                         myChart.data.datasets[j].label = labelName[j]
-                        myChart.data.datasets[j].data = [
-                            Math.random()*10000,
-                            Math.random()*10000,
-                            Math.random()*10000,
-                            Math.random()*10000,
-                            Math.random()*10000,
-                            Math.random()*10000,
-                            Math.random()*10000
-                        ];
+                        myChart.data.datasets[j].data = idol_mon_data[j].slice(i, i+7)
                     }
                     myChart.update();
                 }
