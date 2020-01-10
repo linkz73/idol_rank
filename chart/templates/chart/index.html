@@ -115,7 +115,7 @@
                 
         myChart.update();
         var frame_duration = 1000;
-        var i=0;
+        var i=1;
         var idol_mon_data = new Array();
         var month_full_list = {{ month_list|safe|escape }} 
         var labelName = {{ label_list|safe|escape }}
@@ -127,10 +127,10 @@
         {% endif %}
         var inter_mon = parseInt(month_full_list.length - MONTHS.length)
         console.log(inter_mon)
-        d3.interval(
-            function(){
+        var d3_interval = d3.interval(function(){
                 if (i > inter_mon) {
-                    this.stop();
+                    d3_interval.stop();
+                    return;
                 }
                 else {
                     myChart.data.labels = month_full_list.slice(i, i+7)
@@ -140,8 +140,7 @@
                     }
                     myChart.update();
                 }
-                i=i+1;
-                console.log(i)
+                i ++;
             }, 
             frame_duration
         );
