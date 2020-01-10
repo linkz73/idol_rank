@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Rank{% endblock %}
+{% load static %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+{% block content %}
+    <style>
+    #img{
+        margin-top: 50px;
+    }
+
+    .thum img{
+        width:60px;
+        height:60px;
+    }
+    </style>
+
+<body>
+
+<div id = "img">
+    <center><img src = "{% static 'img/Ranking.jpg' %}"></center>
+</div>
+
+<div id="menu">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'chart:index' %}">Chart</a></li>
+            <li><a href="{% url 'ranking:index' %}">Ranking</a></li>
+        </ul>
+    </div>
+
+<section>
+  <header>
+    <a href="chart_base.html" class="btn sizeS pupple">
+      <span class="iconPrev"></span>
+      이전
+    </a>
+    <h3>{{ ranking.chart.chart_date|date:'Y-m-d'}}</h3>
+    <a href="chart_base.html" class="btn sizeS pupple">
+      <span class="iconNext"></span>
+      다음
+    </a>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th>순위</th>
+        <th>아이돌</th>
+        <th>음원/음반</th>
+        <th>방송/언론</th>
+        <th>포털사이트</th>
+        <th>총점</th>
+        {% comment %} <th>순위변화</th> {% endcomment %}
+      </tr>
+    </thead>
+
+    <tbody> <!--표 -->
+        {% for ranking in ranking_list %}
+        <tr>
+            <td>
+            <span class="rank"> {{ forloop.counter }} </span> <!-- 순위 -->
+            </td>
+            <td class="idol">
+            <span class="thum"><img src = {{ ranking.idol.idol_img }}></span> <!-- 이미지 -->
+            <span class="name">{{ ranking.idol.idol_name }}</span> <!-- 아이돌 이름 -->
+            </td>
+            <td>
+            <span>{{ ranking.chart_music }}</span> <!-- 음원/음반 -->
+            </td>
+            <td>
+            <span>{{ ranking.chart_media }}</span> <!-- 방송/언론 -->
+            </td>
+            <td>
+            <span>{{ ranking.chart_portal }}</span> <!-- 포털사이트 -->
+            </td>
+            <td>
+            <span class="bold">{{ ranking.chart_total }}</span> <!-- 총점 -->
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+</body>
+{% endblock content %}
+
+{% block footer %}
+    <div id="footer">&copy; Django for Python 2019.</div>
+{% endblock %}
