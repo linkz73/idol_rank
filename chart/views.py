@@ -38,6 +38,7 @@ def index(request):
     start_datef = datetime.datetime.strptime(str(start_date), "%Y%m")
     # print("start date is2 ",start_date)
     # pdb.set_trace()  # 디버깅. 
+    # todo : 몇명 데이터가 중간에 빔. 결측치 처리 필요    
 
     ord_dict = OrderedDict()
 
@@ -56,14 +57,21 @@ def index(request):
     top10_idol = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]  # 테이블 조인해서 chart_date 로 where 
     i = 0
     label_list = []
-    for ii in top10_idol:
+    for idi in top10_idol:
         total_list = []
-        label_list.append(ii.idol.idol_name)
-        temp_list = Chart.objects.select_related('idol').filter(idol_id=int(ii.idol_id)).order_by('chart_total')
-        for item in temp_list:
-            total_list.append(item.chart_total)
+        label_list.append(idi.idol.idol_name)
+        # temp_list = Chart.objects.select_related('idol').filter(idol_id=int(idi.idol_id)).order_by('chart_date')
+        for date_index in date_list:
+            try:
+                temp_total = Chart.objects.select_related('idol').filter(idol_id=int(idi.idol_id), chart_date=int(date_index)).values()[0]['chart_total']
+            except:
+                temp_total = 0
+            if temp_total is None:
+                temp_total = 0
+            total_list.append(temp_total)
+           
         ord_dict[i] = {}
-        ord_dict[i]['name'] = ii.idol.idol_name
+        ord_dict[i]['name'] = idi.idol.idol_name
         ord_dict[i]['total'] = total_list
         i += 1
     
