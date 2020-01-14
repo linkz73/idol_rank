@@ -218,13 +218,14 @@ for name in remove_val:
     # print(type(pred))
     result = pred, 201912, idol_id
     list.append(result)
+    del [df, result_df]
 # fig = plt.figure(facecolor='white', figsize=(20, 10))
 # ax = fig.add_subplot(111)
 # ax.plot(y_test, label='True')
 # ax.plot(pred, label='Prediction')
 # ax.legend()
 # plt.show()
-# del[df, result_df]
+
 
 
 
@@ -232,10 +233,11 @@ insert_predict_sql = """INSERT INTO django_app.predict(predict_total, predict_da
 VALUES (%s, %s, %s)"""
 
 value = list
-
-# print(value)
-
 cur.executemany(insert_predict_sql, value)
+con.commit()
+
+foreign_key = """ALTER TABLE predict ADD FOREIGN KEY (idol_id) REFERENCES idol (idol_id);"""
+cur.execute(foreign_key)
 con.commit()
 
 con.close()
