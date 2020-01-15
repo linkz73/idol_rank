@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, TemplateView, FormView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
 
-from .models import Chart, Idol
+from .models import Chart, Idol, Predict
 from django.db.models import Q
 from django.shortcuts import render
 from django.forms.models import model_to_dict
@@ -47,7 +47,7 @@ def index(request):
     while True:
         date_list.append(temp_date.strftime("%Y%m"))
         temp_date += relativedelta(months=1)
-        if temp_date > recent_date:
+        if temp_date > recent_date + relativedelta(months=1):
             break
 
     top10_idol = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]  # 테이블 조인해서 chart_date 로 where 
@@ -63,8 +63,10 @@ def index(request):
             except:
                 temp_total = 0
             if temp_total is None:
-                temp_total = 0
+                temp_total = Predict.objects.select_related('idol').filter(idol_id=int(idi.idol_id), predict_date=int(date_index)).values()[0]['predict_total']
             total_list.append(temp_total)
+
+
            
         ord_dict[i] = {}
         ord_dict[i]['name'] = idi.idol.idol_name

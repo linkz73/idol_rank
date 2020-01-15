@@ -17,4 +17,5 @@ insert_idol_sql = """INSERT INTO django_app.chart(chart_id, chart_music, chart_m
 cur.execute(insert_idol_sql)
 con.commit()
 
+
 con.close()

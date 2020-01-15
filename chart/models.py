@@ -34,6 +34,21 @@ class Chart(models.Model):
     def __str__(self):
         return self.chart_id
 
+class Predict(models.Model):
+    predict_id = models.AutoField(primary_key=True)
+    idol = models.ForeignKey(Idol, null=True, on_delete=models.CASCADE, )
+    predict_total = models.FloatField(null=False, default=0)
+    predict_date = models.IntegerField(null=False, default=0)
+
+    class Meta:
+        verbose_name = 'predict'  # 이 이름을 이용해서 표시 가능
+        verbose_name_plural = 'predict'
+        db_table = 'predict'
+        ordering = ('-predict_id',)
+
+    def __str__(self):
+        return self.predict_id
+
     # def get_absolute_url(self):
     #     return reverse('chart:post_detail', args=(self.slug,))
     #     # return reverse('blog:post_detail', kwargs={'slug': self.slug})
