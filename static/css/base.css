@@ -41,10 +41,10 @@ div#content {
 }
 
 div#footer{
-    position: absolute;
-    bottom: 20px;
-    left: 50px;
-    right: 50px;
+    position: relative;
+    bottom: 15px;
+    left: 0px;
+    right: 0px;
     height: 30px;
     color: #888;
     text-align: center;
@@ -133,6 +133,10 @@ td, th {
     border-bottom: 1px solid #eee;
     /*vertical-align: top;*/
     padding: 5px 15px;
+}
+
+section {
+    padding: 30px;
 }
 
 table.change-list, table.change-list th, table.change-list td {

@@ -34,7 +34,7 @@ div#menu {
 }
 
 div#content {
-    position: absolute;
+    position: relative;
     top: 90px;
     left: 50px;
     right: 50px;
@@ -42,10 +42,9 @@ div#content {
 
 div#footer{
     position: absolute;
-    bottom: 20px;
-    left: 50px;
-    right: 50px;
-    height: 30px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
     color: #888;
     text-align: center;
     font-size: 12px;
