@@ -59,13 +59,15 @@ def index(request):
         # temp_list = Chart.objects.select_related('idol').filter(idol_id=int(idi.idol_id)).order_by('chart_date')
         for date_index in date_list:
             try:
-                temp_total = Chart.objects.select_related('idol').filter(idol_id=int(idi.idol_id), chart_date=int(date_index)).values()[0]['chart_total']
+                if int(date_index) == 201912:
+                    temp_total = Predict.objects.select_related('idol').filter(idol_id=int(idi.idol_id)).values()[0]['predict_total']
+                else:
+                    temp_total = Chart.objects.select_related('idol').filter(idol_id=int(idi.idol_id), chart_date=int(date_index)).values()[0]['chart_total']
             except:
                 temp_total = 0
             if temp_total is None:
-                temp_total = Predict.objects.select_related('idol').filter(idol_id=int(idi.idol_id), predict_date=int(date_index)).values()[0]['predict_total']
+                temp_total = 0
             total_list.append(temp_total)
-
 
            
         ord_dict[i] = {}
