@@ -24,14 +24,14 @@ warnings.filterwarnings("ignore")
 import pymysql
 import datetime
 
-con = pymysql.connect(host = "localhost", user = "root", password ="1234",
+con = pymysql.connect(host = "localhost", user = "django_app", password ="django_app123",
                       db = "django_app")
 cur = con.cursor()
 
 #predict 테이블 생성
-create_predict_sql = """CREATE TABLE django_app.predict (predict_id INT AUTO_INCREMENT PRIMARY KEY, predict_total FLOAT, predict_date INT, idol_id INT)"""
-cur.execute(create_predict_sql)
-con.commit()
+# create_predict_sql = """CREATE TABLE django_app.predict (predict_id INT AUTO_INCREMENT PRIMARY KEY, predict_total FLOAT, predict_date INT, idol_id INT)"""
+# cur.execute(create_predict_sql)
+# con.commit()
 
 make_df_sql = """SELECT idol.idol_name, chart.*
 FROM chart INNER JOIN idol
@@ -236,8 +236,8 @@ value = list
 cur.executemany(insert_predict_sql, value)
 con.commit()
 
-foreign_key = """ALTER TABLE predict ADD FOREIGN KEY (idol_id) REFERENCES idol (idol_id);"""
-cur.execute(foreign_key)
-con.commit()
+# foreign_key = """ALTER TABLE predict ADD FOREIGN KEY (idol_id) REFERENCES idol (idol_id);"""
+# cur.execute(foreign_key)
+# con.commit()
 
 con.close()
