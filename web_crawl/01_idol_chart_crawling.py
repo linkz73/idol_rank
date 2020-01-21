@@ -23,7 +23,7 @@ driver = webdriver.Chrome(path, chrome_options=options)
 df = pd.DataFrame(columns=['순위', 'idol', '음원/음반', '유튜브', '전문가/평점랭킹', '방송/포털/소셜', '총점', '순위변화', '아이돌 평점주기', '날짜', 'img'])
 for year in range(2018,2020,1):
     for month in range(1,13,1):
-        if year == 2019 and month == 12:
+        if year == 2020 and month == 1:
             break
         else:
             total_m = []
@@ -31,23 +31,27 @@ for year in range(2018,2020,1):
             for page in range(1,6,1):
 
                 url = "https://www.idol-chart.com/ranking/month/?sm="+str(year) +str(month).rjust(2, '0') +"&page=" +str(page)
-
+                print(url)
                 driver.get(url)
                 driver.implicitly_wait(3)
-                items = driver.find_elements_by_tag_name("td")
-                spans = driver.find_elements_by_tag_name("span")
+                section = driver.find_element_by_tag_name("section")
+                items = section.find_elements_by_tag_name("td")
+                spans = section.find_elements_by_tag_name("span")
 
                 #이미지 링크 추출
                 for span in spans:
                     img_url = span.get_attribute("style")
                     if img_url:
                         img_url = img_url.split('\"')
+
                         img = img_url[1]
                         img = "https://www.idol-chart.com" + img
+                        print(img)
                         img_list.append(img)
                 
                 #이미지 링크를 제외한 나머지 데이터 추출
                 for item in items:
+                    print(item.text)
                     if item != None:
                         split_item = []
                         split_item.append(item.text)
@@ -68,7 +72,7 @@ for year in range(2018,2020,1):
             sub_df = pd.DataFrame(result, columns=['순위', 'idol', '음원/음반', '유튜브', '전문가/평점랭킹', '방송/포털/소셜', '총점', '순위변화', '아이돌 평점주기', '날짜', 'img'])
             df = df.append(sub_df)
 
-driver.close()
+driver.quit()
 
 df.drop(['순위','유튜브', '전문가/평점랭킹', '순위변화', '아이돌 평점주기'], axis='columns', inplace=True)
 df_val = df.values.tolist()
@@ -88,7 +92,7 @@ cur.executemany(insert_idol_sql,val)
 con.commit()
 
 #temp_chart 테이블 생성
-create_chart_sql = """CREATE TABLE IF NOT EXISTS django_app.temp_chart (chart_id INT AUTO_INCREMENT PRIMARY KEY, idol_id VARCHAR(30), chart_music INT,
+create_chart_sql = """CREATE TABLE django_app.temp_chart (chart_id INT AUTO_INCREMENT PRIMARY KEY, idol_id VARCHAR(30), chart_music INT,
 chart_media INT, chart_portal INT, chart_total INT, chart_date INT)"""
 cur.execute(create_chart_sql)
 con.commit()

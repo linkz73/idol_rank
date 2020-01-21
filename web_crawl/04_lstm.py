@@ -29,7 +29,7 @@ con = pymysql.connect(host = "localhost", user = "root", password ="1234",
 cur = con.cursor()
 
 #predict 테이블 생성
-create_predict_sql = """CREATE TABLE django_app.predict (predict_id INT AUTO_INCREMENT PRIMARY KEY, predict_total FLOAT, predict_date INT, idol_id INT)"""
+create_predict_sql = """CREATE TABLE django_app.predict (predict_id INT AUTO_INCREMENT PRIMARY KEY, predict_total FLOAT, predict_date INT, idol_id INT) WHERE IF NOT EXISTS django_app.predict"""
 cur.execute(create_predict_sql)
 con.commit()
 
