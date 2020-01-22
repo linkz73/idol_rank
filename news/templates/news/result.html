@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}News{% endblock %}
+{% load static %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <style>
+
+    #title{
+        margin-top:130px;
+        margin-bottom:30px;
+        text-align:center;
+    }
+
+     .search, h2{
+        text-align:left;
+    }
+
+    </style>
+{% endblock %}
+{% block extrascript %}
+{% endblock %}
+
+{% block content %}
+<body>
+    <h1 id="title"> 네이버 API News 검색 결과</h1>
+
+    {% if keyword %}
+        <center><h2>검색어 : {{ keyword }}</h2></center>
+    {% else %}
+        <center><p>No Data</p></center>
+    {% endif %}
+
+
+<div class = "search">
+    <center>
+    <form action="{% url 'news:result' %}" method="post">
+    {% csrf_token %}
+    <label for="keyword">검색어 입력</label>
+    <input type="text" name="keyword" id="keyword" value="">
+    <input type="submit" value="검색">
+    </form>
+    </center>
+</div>
+
+    <br>
+    <br>
+    
+    <table>
+    {% for title, url, img, summary_content in values %}
+        <tr>
+            <td width="60%">    
+                <a href = "blog url">
+                    <a href = {{ url }}><strong class = "post_title">{{ title }}</strong>></a>
+                </a>
+            </td>
+            <td rowspan = "2" width="20%">
+                <img src = "{% static img %}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>
+                    {{ summary_content }}
+                </span>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}
+<!--############-->
+{% block footer %}
+    <div id="footer">&copy; Django for Python 2019.</div>
+{% endblock %}

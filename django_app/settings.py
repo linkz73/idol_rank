@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chart.apps.ChartConfig',
     'ranking.apps.RankingConfig',
+    'news.apps.NewsConfig',
 ]
 
 MIDDLEWARE = [
