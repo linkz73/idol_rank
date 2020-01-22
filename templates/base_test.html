@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% load static %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<body>
+    <div id="content_home" align="center";>
+        {% load static %}
+        <img src="{% static "D:\idol_rank\static\img\predict_img.jpg" %}">
+    </div>
+
+    <div id="menu" align="center">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'news:index' %}">News</a></li>
+            <li><a href="{% url 'chart:index' %}">Chart</a></li>
+            <li><a href="{% url 'ranking:index' %}">Data</a></li>
+        </ul>
+    </div>
+</body>
+{% endblock content %}
+
+{% block footer %}
+    <div id="footer">&copy; Django for Python 2019.</div>
+{% endblock %}
+</html>

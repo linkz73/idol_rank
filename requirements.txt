@@ -16,4 +16,5 @@ scikit-learn
 cryptography
 beautifulsoup4
 lxml
-gensim newspaper3k
+gensim
+newspaper3k
