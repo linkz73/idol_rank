@@ -48,13 +48,14 @@ def make_content(url_list, news_content_list,  content_summarize_list, title_lis
             # print(news.text)
             # print(type(news.text))
             summary_content = summarize(news.text, word_count=100, ratio= 0.5)
-            if summary_content != None:
+            if summary_content:
                 content_summarize_list.append(summary_content)
             else:
-                content_summarize_list.append("기사의 내용이 없습니다.")
+                content_summarize_list.append("요약 할 기사의 내용이 없습니다.")
         except Exception as e:
             print("exceptions is ", e)
             pass
+
 
 def wordcloud(news_content_list, page_info_list, img_url):
     for i in range(len(news_content_list)):
@@ -80,11 +81,15 @@ def wordcloud(news_content_list, page_info_list, img_url):
             title = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', page_info_list[i][1])
             wordcloud.to_file("C:\Study\project_idol\static\wordcloud\/" + title +".png")
             plt.axis("off")
+            plt.cla()
             url = "wordcloud\/" + title +".png"
             url = re.sub('/','',url)
             img_url.append(url)
             # plt.show()
         except Exception as e:
+            no_img = 'wordcloud\/noimage.jpg'
+            no_img = re.sub('/', '', no_img)
+            img_url.append(no_img)
             print("exceptions is ", e)
             pass
 # input = input('검색할 단어 > ')
@@ -102,3 +107,7 @@ def wordcloud(news_content_list, page_info_list, img_url):
 # make_content(url_list, news_content_list, content_summarize_list, title_list)
 # wordcloud(news_content_list, page_info_list, img_url)
 # print(img_url)
+# print(title_list)
+# print(url_list)
+# print(img_url)
+# print(content_summarize_list)
