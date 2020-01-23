@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, TemplateView, FormView
 from django.views.generic.dates import ArchiveIndexView, YearArchiveView, MonthArchiveView
 from django.views.generic.dates import DayArchiveView, TodayArchiveView
 
-from .models import News
+# from .models import News
 from django.db.models import Q
 from django.shortcuts import render
 from django.forms.models import model_to_dict
