@@ -52,10 +52,17 @@ def result(request):
         url_list.append(page_info_list[i][1])
     make_content(url_list, news_content_list, content_summarize_list, title_list)
     wordcloud(news_content_list, page_info_list, img_url)
-    for i in range(len(title_list)):
+    for i in range(len(url_list)):
         values = (title_list[i], url_list[i], img_url[i], content_summarize_list[i])
         value.append(values)
     context = {'keyword': keyword, 'values': value}
+    page_info_list = []
+    url_list = []
+    title_list = []
+    news_content_list = []
+    content_summarize_list = []
+    img_url = []
+    value = []
     return render(request, 'news/result.html', context)
 
     '''

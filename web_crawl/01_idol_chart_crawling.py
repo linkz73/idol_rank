@@ -31,7 +31,6 @@ for year in range(2018,2020,1):
             for page in range(1,6,1):
 
                 url = "https://www.idol-chart.com/ranking/month/?sm="+str(year) +str(month).rjust(2, '0') +"&page=" +str(page)
-                print(url)
                 driver.get(url)
                 driver.implicitly_wait(3)
                 section = driver.find_element_by_tag_name("section")
@@ -46,12 +45,10 @@ for year in range(2018,2020,1):
 
                         img = img_url[1]
                         img = "https://www.idol-chart.com" + img
-                        print(img)
                         img_list.append(img)
                 
                 #이미지 링크를 제외한 나머지 데이터 추출
                 for item in items:
-                    print(item.text)
                     if item != None:
                         split_item = []
                         split_item.append(item.text)

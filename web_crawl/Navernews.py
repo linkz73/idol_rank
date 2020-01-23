@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 
 def get_api_result(keyword, display, start):
     url = "https://openapi.naver.com/v1/search/news?query=" + keyword +"&display=" +str(display)\
-          +"&start=" +str(start)+ "&sort=sim"     # 유사성을 기준으로
+          +"&start=" +str(start)+ "&sort=date"     # 유사성을 기준으로
     result = requests.get(urlparse(url).geturl(),
                           headers={"X-Naver-Client-Id": "GQKArseCDOh1t1AMHtxQ",
                                    "X-Naver-Client-Secret": "yf6tWSa_Zl"})
@@ -98,6 +98,7 @@ def wordcloud(news_content_list, page_info_list, img_url):
 # title_list = []
 # news_content_list = []
 # img_url = []
+# value = []
 # content_summarize_list = []
 # call_and_print(input, 1, page_info_list)
 # for i in range(len(page_info_list)):
@@ -106,8 +107,9 @@ def wordcloud(news_content_list, page_info_list, img_url):
 #
 # make_content(url_list, news_content_list, content_summarize_list, title_list)
 # wordcloud(news_content_list, page_info_list, img_url)
-# print(img_url)
+# for i in range(len(title_list)):
+#     values = (title_list[i], url_list[i], img_url[i], content_summarize_list[i])
+#     value.append(values)
+# print(value)
+# print(page_info_list)
 # print(title_list)
-# print(url_list)
-# print(img_url)
-# print(content_summarize_list)

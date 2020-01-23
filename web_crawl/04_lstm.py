@@ -19,6 +19,13 @@ import sys
 warnings.filterwarnings("ignore")
 import pymysql
 import datetime
+from dateutil.relativedelta import relativedelta
+
+now_date = str(datetime.datetime.today())
+pred_datef = datetime.datetime.strptime(now_date[:7]+'-01',"%Y-%m-%d")
+recent_date = pred_datef - relativedelta(months=1)
+pred_date = recent_date + relativedelta(months=1)
+
 
 con = pymysql.connect(host = "localhost", user = "root", password ="1234",
                       db = "django_app")
@@ -37,7 +44,7 @@ results = cur.fetchall()
 datas = pd.DataFrame(results, columns=['idol_name', 'chart_id', 'chart_music', 'chart_media', 'chart_portal','chart_total', 'chart_date', 'idol_id'])
 datas['chart_date'] = datas['chart_date'].apply(lambda x:datetime.datetime.strptime(str(x), "%Y%m"))
 
-val = datas[datas['chart_date'] == '2019-11-01']
+val = datas[datas['chart_date'] == str(recent_date)[:11]]
 val = val.nlargest(10, 'chart_total', keep='first')
 val = [val['idol_name'].values[i]for i in range(len(val))]
 
@@ -45,7 +52,7 @@ remove_val = list(set(val))
 list = []
 
 for name in remove_val:
-    index_dr = pd.date_range('20180101', periods=23, freq='MS')
+    index_dr = pd.date_range('20180101', periods=24, freq='MS')
     df = pd.DataFrame(index=index_dr, columns=['set'])
 
     name_df = datas[datas['idol_name'] == name]
@@ -153,9 +160,12 @@ for name in remove_val:
     pred = model.predict([X1_chart,X2_chart,X3_chart])
     pred = pred.flatten().tolist()
     pred = round(pred[0], 2)
-    result = pred, 201912, idol_id
+    
+    result = pred, int(str(pred_date)[:11].replace("-","")), idol_id
     list.append(result)
     del [df, result_df]
+    
+    
 # fig = plt.figure(facecolor='white', figsize=(20, 10))
 # ax = fig.add_subplot(111)
 # ax.plot(y_test, label='True')
@@ -176,3 +186,4 @@ con.commit()
 # con.commit()
 
 con.close()
+
