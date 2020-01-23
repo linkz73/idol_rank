@@ -5,7 +5,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main_home.css' %}">
 {% endblock %}
 
-{% block content %}
 
 <body>
     <div id="content_home" align="center";>
@@ -21,10 +20,8 @@
             <li><a href="{% url 'ranking:index' %}">Data</a></li>
         </ul>
     </div>
-</body>
-{% endblock content %}
 
-{% block footer %}
-    <div id="footer">&copy; Django for Python 2019.</div>
-{% endblock %}
+{% block content %}{% endblock %}
+{% block footer %}{% endblock %}
+</body>
 </html>

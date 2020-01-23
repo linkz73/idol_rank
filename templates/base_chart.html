@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %}Django Web Programming{% endblock %}</title>
+
+
+    {% load static %}
+    {% block extrastyle %}
+    {% endblock %}
+    {% block extrascript %}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+
+<body>
+    <div id="content_home" align="center";>
+        {% load static %}
+        <img src="{% static "D:\idol_rank\static\img\predict_img.jpg" %}">
+    </div>
+
+    <div id="menu" align="center">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'news:index' %}">News</a></li>
+            <li><a href="{% url 'chart:index' %}">Chart</a></li>
+            <li><a href="{% url 'ranking:index' %}">Data</a></li>
+        </ul>
+    </div>
+
+    {% block content %}{% endblock %}
+    {% block footer %}{% endblock %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

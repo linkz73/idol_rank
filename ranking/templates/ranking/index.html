@@ -1,9 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_data.html" %}
 {% block title %}Rank{% endblock %}
 {% load static %}
 
 {% block extrastyle %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_home.css' %}">
 {% endblock %}
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -19,22 +20,35 @@
         width:60px;
         height:60px;
     }
+
+    #content_home img{
+        padding-left:15px;
+    }
+
+    #menu{
+        padding-left:15px;
+    }
+
+    #footer {
+    position: relative;
+    bottom: 15px;
+    left: 0px;
+    right: 0px;
+    height: 30px;
+    color: #888;
+    text-align: center;
+    font-size: 12px;
+    padding: 1em;
+    border-top: 1px solid #bbb;
+    }
+
+    section{
+        padding-top:50px;
+    }
     </style>
 
 <body>
 
-<div id = "img">
-    <center><img src = "{% static 'img/predict.jpg' %}"></center>
-</div>
-
-<div id="menu">
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'news:index' %}">News</a></li>
-            <li><a href="{% url 'chart:index' %}">Chart</a></li>
-            <li><a href="{% url 'ranking:index' %}">Ranking</a></li>
-        </ul>
-    </div>
 
 <section>
   <header>

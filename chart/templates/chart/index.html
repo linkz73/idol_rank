@@ -1,12 +1,12 @@
-{% extends "base.html" %}
+{% extends "base_chart.html" %}
 {% block title %}chart{% endblock %}
 {% load static %}
 {% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_home.css' %}">
     <style>
 
     #title{
-        margin-top:130px;
+        margin-top:80px;
         margin-bottom:30px;
         text-align:center;
     }
@@ -22,6 +22,26 @@
         width:50%;
         max-width:1200px;
         margin:20px auto;
+    }
+
+    #footer {
+    position: relative;
+    bottom: 15px;
+    left: 0px;
+    right: 0px;
+    height: 30px;
+    color: #888;
+    text-align: center;
+    font-size: 12px;
+    padding: 1em;
+    border-top: 1px solid #bbb;
+}
+    #content_home img{
+        padding-left:15px;
+    }
+
+    #menu{
+        padding-left:15px;
     }
 
     </style>

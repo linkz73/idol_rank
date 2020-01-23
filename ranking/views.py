@@ -24,7 +24,7 @@ def index(request):
     recent_date_n = str(recent_date0[0]['chart_date'])
     labelMonth = recent_date_n[0:4] + "년 " + recent_date_n[4:6] + "월"
 
-    ranking_list = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:10]  # 테이블 조인해서 chart_date 로 where 
+    ranking_list = Chart.objects.select_related('idol').filter(chart_date=int(recent_date_n)).order_by('-chart_total')[:30]  # 테이블 조인해서 chart_date 로 where
     context = {'ranking_list': ranking_list, 'recent_date': labelMonth}
     return render(request, 'ranking/index.html', context)
 
