@@ -74,7 +74,6 @@ layout-bbs header .btn.pupple {
 table {
 width: 70%;
 margin:10px auto;
-border-collapse: collapse;
 border-spacing: 0;
 
 border-bottom: 3px solid #e4c5c5;
@@ -84,15 +83,28 @@ padding: 3px;
 }
 
 center {
-
 margin: 5px;
 padding: 60px 30px 0px 30px; /* 위 오른 아래 왼 */
 }
 
 td, th {
-    text-align: center
+    text-align: center;
 }
 
-.idol {
-    text-align :left
+td {
+    border-top: 3px solid #f0f0f0;
+}
+
+th {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+td.idol {
+    text-align :right;
+    height: 71px;
+}
+
+.name {
+  font-weight: 700;
 }

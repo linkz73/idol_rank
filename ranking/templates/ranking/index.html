@@ -67,6 +67,7 @@
     <thead>
       <tr>
         <th>순번</th>
+        <th></th>
         <th>후보자</th>
         <th>설문조사(음원/음반)</th>
         <th>여론(방송/언론)</th>
@@ -83,7 +84,9 @@
             <span class="rank"> {{ forloop.counter }} </span> <!-- 순위 -->
             </td>
             <td class="idol">
-            <span class="thum"><img src = {{ ranking.idol.idol_img }}></span> <!-- 이미지 -->
+            <span class="thum"><img src = {{ ranking.idol.idol_img }}></span><!-- 이미지 -->
+            </td>
+            <td>
             <span class="name">{{ ranking.idol.idol_name }}</span> <!-- 아이돌 이름 -->
             </td>
             <td>
