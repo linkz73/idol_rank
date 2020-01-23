@@ -18,8 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
-from .views import HomeView  # 홈 뷰
-from .views import Description_NewsView, Description_DataView, Description_ChartView
+from .views import *
 # from .views import UserCreateView, UserCreateDoneTV4
 
 urlpatterns = [

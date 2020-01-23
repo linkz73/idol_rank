@@ -34,11 +34,11 @@
     bottom: -30px;
     left: 0px;
     right: 0px;
-    height: 0px;
+    height: 30px;
     color: #888;
     text-align: center;
     font-size: 12px;
-    padding: 1em;
+    padding: 2px;
     border-top: 1px solid #bbb;
     }
 
@@ -67,12 +67,12 @@
 
 <section>
   <header>
-    <a href="{% url "ranking:prev_index" %}" class="btn sizeS pupple">
+    <a href="javascript:alert('이전 데이터가 없습니다.');" class="btn sizeS1 pupple1">
       <span class="iconPrev"></span>
       이전
     </a>
-    <h3>{{recent_date}}</h3>
-    <a href="javascript:alert('다음 데이터가 없습니다.');" class="btn sizeS1 pupple1" >
+    <h3>{{prev_date}}</h3>
+    <a href="{% url 'ranking:index' %}" class="btn sizeS pupple">
       <span class="iconNext"></span>
       다음
     </a>

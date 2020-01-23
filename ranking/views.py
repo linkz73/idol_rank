@@ -5,6 +5,8 @@ from django.views.generic.dates import DayArchiveView, TodayArchiveView
 from chart.models import Chart, Idol
 from django.db.models import Q
 from django.shortcuts import render
+from dateutil.relativedelta import relativedelta
+import datetime
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -18,6 +20,18 @@ from django_app.views import LoginRequiredMixin
 #     paginate_by = 2  # 한페이지에 2줄
 #     context_object_name = 'posts'  # 메타에서 사용. tamplates 에서 이름 사용 / object list 대신 사용 가능
 
+def prev_index(request):
+    recent_date0 = Chart.objects.order_by('-chart_date').values()[:1]
+    recent_date_n = str(recent_date0[0]['chart_date'])
+    recent_date = datetime.datetime.strptime(recent_date_n,"%Y%m")
+    prev_date = recent_date - relativedelta(months=1)
+    prev_date_n = str(prev_date)[:10]
+    labelMonth = prev_date_n[0:4] + "년 " + prev_date_n[5:7] + "월"
+
+    ranking_list = Chart.objects.select_related('idol').filter(chart_date=int(prev_date_n.replace("-","")[:6])).order_by('-chart_total')[
+                   :30]  # 테이블 조인해서 chart_date 로 where
+    context = {'ranking_list': ranking_list, 'prev_date': labelMonth}
+    return render(request, 'ranking/prev_index.html', context)
 
 def index(request):
     recent_date0 = Chart.objects.order_by('-chart_date').values()[:1]

@@ -21,6 +21,7 @@ class Description_DataView(TemplateView):
 class Description_ChartView(TemplateView):
     template_name = 'description_chart.html'
 
+
 class UserCreateView(CreateView):
     template_name = 'registration/register.html'
     form_class = UserCreationForm
